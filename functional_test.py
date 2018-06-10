@@ -33,15 +33,25 @@ class NewVisitorTest(unittest.TestCase):
 
         # User hits enter
         inputbox.send_keys(Keys.ENTER)  
-        time.sleep(1)
+        time.sleep(2)
 
         # User sees "1: Get a haircut" in a todos table
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')  
-        self.assertTrue(
-            any(row.text == '1: Get a haircut' for row in rows),
-            'New to-do item did not appear in table'
-        )
+        self.assertIn('1: Get a haircut', [row.text for row in rows])
+
+        # User enters Read a book as a to do
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Read a book')
+
+        # User hits enter
+        inputbox.send_keys(Keys.ENTER)  
+        time.sleep(2)
+
+        # User sees "1: Read a book" in a todos table
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')  
+        self.assertIn('2: Read a book', [row.text for row in rows])
 
         self.fail('Finish the test!')
         # User can come back to page and see todos
