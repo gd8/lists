@@ -12,6 +12,11 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def check_for_row_in_list_table(self, row_text):
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows])
+
     def test_can_start_a_list_and_retrieve_it_later(self):
         # User can go to page
         self.browser.get('http://localhost:8000')
@@ -33,12 +38,7 @@ class NewVisitorTest(unittest.TestCase):
 
         # User hits enter
         inputbox.send_keys(Keys.ENTER)  
-        time.sleep(2)
-
-        # User sees "1: Get a haircut" in a todos table
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')  
-        self.assertIn('1: Get a haircut', [row.text for row in rows])
+        time.sleep(1)
 
         # User enters Read a book as a to do
         inputbox = self.browser.find_element_by_id('id_new_item')
@@ -46,12 +46,12 @@ class NewVisitorTest(unittest.TestCase):
 
         # User hits enter
         inputbox.send_keys(Keys.ENTER)  
-        time.sleep(2)
+        time.sleep(1)
 
-        # User sees "1: Read a book" in a todos table
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')  
-        self.assertIn('2: Read a book', [row.text for row in rows])
+        # User sees "1: Get a haircut" in a todos table
+        self.check_for_row_in_list_table('1: Get a haircut')
+        # User sees "2: Read a book" in a todos table
+        self.check_for_row_in_list_table('2: Read a book')
 
         self.fail('Finish the test!')
         # User can come back to page and see todos
