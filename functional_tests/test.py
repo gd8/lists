@@ -65,10 +65,10 @@ class NewVisitorTest(LiveServerTestCase):
         # User sees "2: Read a book" in a todos table
         self.wait_for_row_in_list_table('2: Read a book')
 
-        self.fail('Finish the test!')
+        # self.fail('Finish the test!')
         # User can come back to page and see todos
-        self.wait_for_row_in_list_table('1: Get a haircut')
-        self.wait_for_row_in_list_table('2: Read a book')
+        # self.wait_for_row_in_list_table('1: Get a haircut')
+        # self.wait_for_row_in_list_table('2: Read a book')
 
     def test_multiple_users_can_start_lists_at_different_urls(self):
         # Edith starts a new to-do list
